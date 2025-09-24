@@ -114,7 +114,9 @@
   <div class="nav-dots" id="navDots">
     <a href="#overview"></a>
     <a href="#financials"></a>
+    <a href="#comparative-growth"></a> <!-- NEW -->
     <a href="#operations"></a>
+    <a href="#facilities"></a> <!-- NEW -->
     <a href="#market"></a>
     <a href="#assets"></a>
     <a href="#legal"></a>
@@ -125,7 +127,7 @@
   <!-- Section: Overview / Highlights -->
   <section id="overview">
     <div class="inner reveal">
-      <h2>Executive Summary & Traction</h2>
+      <h2>Similar company Executive Summary & Traction</h2>
       <p>Founded to close the gap between commodity doors and costly imports, this company delivers premium, design-forward interior doors manufactured and assembled in Southern California. The combination of a modular European system, precision CNC finishing, and a showroom-led B2B channel delivers high margins and rapid order turnaround.</p>
 
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;align-items:center;">
@@ -148,7 +150,7 @@
     <div class="inner reveal">
       <h2>Key Financials & Growth</h2>
   <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
-        <div class="stat-card" style="min-width:180px;"><div class="label">2‑Year Revenue CAGR</div><div class="num">~145%</div></div>
+        <div class="stat-card" style="min-width:180px;"><div class="label">2-Year Revenue CAGR</div><div class="num">~145%</div></div>
         <div class="stat-card" style="min-width:180px;"><div class="label">Gross Margin (est.)</div><div class="num">~58%</div></div>
         <div class="stat-card" style="min-width:180px;"><div class="label">Net Margin (2024)</div><div class="num">35%</div></div>
         <div class="stat-card" style="min-width:180px;"><div class="label">Inventory Value (est.)</div><div class="num">$650k+</div></div>
@@ -168,6 +170,32 @@
     </div>
   </section>
 
+  <!-- Section: Comparative Growth (NEW) -->
+  <section id="comparative-growth">
+    <div class="inner reveal">
+      <h2>Comparative Growth (Our Company vs. Peers)</h2>
+      <div>
+        <h3 style="color:var(--color-gold)">Key Takeaways</h3>
+        <p class="muted">
+          The purple line represents the smoothed data (3-month moving average).
+          The blue dashed line is the forecast from the linear model projected 3 years ahead.
+          The average annual growth rate came out to around 72% — which already looks more realistic for a business forecast.
+        </p>
+      </div>
+      <div class="chart-wrap" style="margin-top:20px; text-align:center;">
+        <img id="growthImage" src="output (2).png"
+             alt="Comparative growth chart"
+             style="width:100%; max-height:320px; object-fit:contain; border-radius:8px;
+                    border:1px solid rgba(255,255,255,0.1);
+                    box-shadow: 0 6px 20px rgba(0,0,0,0.45);" />
+        <p style="font-size:0.95rem; text-align:center; margin-top:8px;
+                  font-style:italic; color:var(--color-gold);">
+          ▲ Average Annual Growth Rate ≈ <strong>72%</strong> — signaling strong scalability potential.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- Section: Operations & Products -->
   <section id="operations">
     <div class="inner reveal">
@@ -184,16 +212,56 @@
           </ul>
         </div>
         <div>
-          <h3 style="color:var(--color-gold)">Modular Frame‑Panel System</h3>
+          <h3 style="color:var(--color-gold)">Modular Frame-Panel System</h3>
           <p class="muted">Stock stiles, rails and inserts are combinable, enabling 3–4× more model permutations from the same inventory. This reduces carrying cost and accelerates delivery for custom sizing.</p>
           <h3 style="color:var(--color-gold)">Facilities & Equipment</h3>
           <ul class="bullets">
             <li>Modern LA showroom reflecting luxury positioning</li>
-            <li>In-house assembly & CNC workshop (advanced multi‑purpose CNC)</li>
+            <li>In-house assembly & CNC workshop (advanced multi-purpose CNC)</li>
             <li>Trimmers, edge-banders, precision tooling, packing & logistics</li>
           </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Section: Facilities & Production Capacity (NEW) -->
+  <section id="facilities">
+    <div class="inner reveal">
+      <h2>Facilities & Production Capacity</h2>
+
+      <div class="grid-2">
+        <div>
+          <h3 style="color:var(--color-gold)">Manufacturing Floor</h3>
+          <p class="muted">
+            Our dedicated production facility spans <strong>11,380 square feet</strong>, designed
+            for efficient material flow and modern equipment placement.
+          </p>
+        </div>
+        <div>
+          <h3 style="color:var(--color-gold)">Output Capacity</h3>
+          <p class="muted">
+            With the current machinery and technical setup, monthly production capacity
+            reaches <strong>400–600 complete door sets</strong>, enabling scale while maintaining
+            consistent quality.
+          </p>
+        </div>
+      </div>
+
+      <div class="stat-cards" style="margin-top:14px;">
+        <div class="stat-card">
+          <div class="label">Facility Size</div>
+          <div class="num">11,380 sq.ft.</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Monthly Capacity</div>
+          <div class="num">400–600 sets</div>
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top:8px;">
+        <em>Scalable infrastructure supports both current demand and rapid growth projections.</em>
+      </p>
     </div>
   </section>
 
@@ -255,15 +323,13 @@
 
       <h3 style="color:var(--color-gold)">Legal & Admin</h3>
       <ul class="bullets muted">
-        <li>California S‑Corp, 100% owner-held — assets and DBA transferable</li>
+        <li>California S-Corp, 100% owner-held — assets and DBA transferable</li>
         <li>Seller’s permit, local business licenses in place</li>
         <li>No long-term liabilities or onerous contracts</li>
         <li>General liability insurance (transferable)</li>
       </ul>
     </div>
   </section>
-
-
 
   <!-- Section: Contact / CTA -->
   <section id="contact">
