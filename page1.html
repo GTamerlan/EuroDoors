@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Interior Door Company – Acquisition Pitch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --color-bg: #0f1724; /* dark base for contrast */
+      --color-panel: #ffffff;
+      --color-ink: #0b1220;
+      --color-text: #243447;
+      --color-gold: #d4a017;
+      --color-accent: #ffd98a;
+      --color-border: rgba(255,255,255,0.06);
+      --shadow: 0 12px 40px rgba(2,6,23,0.5);
+      --radius: 18px;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 400px at 10% 10%, rgba(212,160,23,0.05), transparent), var(--color-bg);
+      color: var(--color-text);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      scroll-behavior: smooth;
+    }
+    a { color: var(--color-gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      position: relative;
+      text-align: center;
+      padding: 40px 16px 36px;
+      color: #fff;
+      background-image: linear-gradient(140deg, rgba(11,18,32,0.9), rgba(36,59,85,0.9)), url('imagetop.png');
+      background-size: cover;
+      background-position: center;
+      clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%);
+    }
+    header .hero-inner { max-width: 1100px; margin: 0 auto; }
+    header h1 {
+      margin: 0 0 12px;
+      font-size: 2.8rem;
+      line-height: 1.04;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    header p {
+      font-size: 1.05rem;
+      max-width: 820px;
+      margin: 0 auto;
+      opacity: 0.94;
+    }
+    .btn-primary {
+      display: inline-block;
+      margin-top: 26px;
+      padding: 14px 34px;
+      background: linear-gradient(90deg,var(--color-gold),var(--color-accent));
+      color: var(--color-ink);
+      font-weight: 800;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform .25s ease, box-shadow .25s ease;
+      box-shadow: 0 10px 30px rgba(212,160,23,0.12);
+    }
+    .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(212,160,23,0.16); }
+
+    .nav-dots { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+    .nav-dots a { width: 12px; height: 12px; background: rgba(255,255,255,0.12); border-radius: 50%; display: block; transition: transform .18s, background .18s; border: 2px solid rgba(255,255,255,0.06);} 
+    .nav-dots a.active { background: var(--color-gold); transform: scale(1.25); }
+
+  main { max-width: 1100px; margin: 10px auto; padding: 0 12px 70px; }
+  section { padding: 18px 0; }
+  section .inner { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid var(--color-border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; overflow: hidden; color: #fff; }
+    section h2 { margin-top: 0; color: var(--color-gold); font-size: 1.8rem; text-align: left; margin-bottom: 18px; }
+    section p { margin-bottom: 12px; line-height: 1.6; color: rgba(255,255,255,0.92); }
+    .muted { color: rgba(255,255,255,0.66); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .bullets { padding-left: 18px; margin-top: 10px; }
+    .bullets li { margin-bottom: 8px; }
+
+    .stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 16px; margin: 18px 0; }
+    .stat-card { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.04)); color: #fff; padding: 22px; border-radius: 14px; text-align: left; box-shadow: 0 8px 24px rgba(2,6,23,0.45); border: 1px solid rgba(255,255,255,0.03);} 
+    .stat-card .label { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+    .stat-card .num { font-size: 1.6rem; font-weight: 800; margin-top: 6px; }
+
+  .chart-wrap { margin: 12px 0; background: linear-gradient(180deg,#fff,#fff); border-radius: 10px; padding: 10px; }
+  canvas { width: 100% !important; height: 200px !important; display: block; border-radius: 8px; }
+
+    /* Reveal / animation */
+    .reveal { opacity: 0; transform: translateY(18px) scale(.997); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0) scale(1); }
+
+    footer { background: transparent; color: rgba(255,255,255,0.7); text-align: center; padding: 40px 20px; }
+
+    @media (max-width: 880px) { .grid-2 { grid-template-columns: 1fr; } header h1 { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+
+  <header id="top">
+    <div class="hero-inner">
+      <h1>Interior Door Company — South California<br><span style="font-weight:300; font-size:1.05rem; opacity:.95;">Luxury modular doors • Rapid customization • Turnkey manufacturing</span></h1>
+      <p class="muted">High-margin, fast-growing manufacturer & distributor of European-style interior doors. Proven product-market fit, showroom distribution, and profitable unit economics — now available to an experienced acquirer.</p>
+      <a href="#overview"><button class="btn-primary">View Investor Pitch</button></a>
+    </div>
+  </header>
+
+  <div class="nav-dots" id="navDots">
+    <a href="#overview"></a>
+    <a href="#financials"></a>
+    <a href="#comparative-growth"></a> <!-- NEW -->
+    <a href="#operations"></a>
+    <a href="#facilities"></a> <!-- NEW -->
+    <a href="#market"></a>
+    <a href="#assets"></a>
+    <a href="#legal"></a>
+    <a href="#contact"></a>
+  </div>
+
+  <main>
+  <!-- Section: Overview / Highlights -->
+  <section id="overview">
+    <div class="inner reveal">
+      <h2>Similar company Executive Summary & Traction</h2>
+      <p>Founded to close the gap between commodity doors and costly imports, this company delivers premium, design-forward interior doors manufactured and assembled in Southern California. The combination of a modular European system, precision CNC finishing, and a showroom-led B2B channel delivers high margins and rapid order turnaround.</p>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;align-items:center;">
+        <div class="stat-card" style="min-width:160px;"><div class="label">Revenue (2022)</div><div class="num">$800K</div></div>
+        <div class="stat-card" style="min-width:160px;"><div class="label">Revenue (2023)</div><div class="num">$2.5M</div></div>
+        <div class="stat-card" style="min-width:160px;"><div class="label">Revenue (2024)</div><div class="num">$4.8M</div></div>
+        <div class="stat-card" style="min-width:160px;"><div class="label">Net Profit (2024)</div><div class="num">$1.68M</div></div>
+        <div class="stat-card" style="min-width:220px;background:linear-gradient(90deg,var(--color-gold),var(--color-accent));color:var(--color-ink);">
+          <div class="label">Pro forma projection</div>
+          <div class="num">~2x revenue in 12–18 mo</div>
+        </div>
+      </div>
+
+      <p class="muted">Notes: 2022–2024 figures are historical (reported). The adjacent "Pro forma projection" reflects management's conservative forecast for 12–18 months with targeted marketing and showroom expansion; detailed projections available under NDA.</p>
+    </div>
+  </section>
+
+  <!-- Section: Financials -->
+  <section id="financials">
+    <div class="inner reveal">
+      <h2>Key Financials & Growth</h2>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+        <div class="stat-card" style="min-width:180px;"><div class="label">2-Year Revenue CAGR</div><div class="num">~145%</div></div>
+        <div class="stat-card" style="min-width:180px;"><div class="label">Gross Margin (est.)</div><div class="num">~58%</div></div>
+        <div class="stat-card" style="min-width:180px;"><div class="label">Net Margin (2024)</div><div class="num">35%</div></div>
+        <div class="stat-card" style="min-width:180px;"><div class="label">Inventory Value (est.)</div><div class="num">$650k+</div></div>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="revChart"></canvas>
+        <div class="muted" style="font-size:0.9rem;margin-top:8px">Revenue growth shows rapid scaling from $0.8M → $4.8M (2022→2024). Pro forma projections with modest digital investment show 2x+ growth potential in 12–18 months.</div>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="profitChart"></canvas>
+        <div class="muted" style="font-size:0.9rem;margin-top:8px">High-margin fundamentals driven by modular inventory, local finishing, and direct B2B channels keep net margins >30%, attractive for acquirers seeking cash-generative acquisitions.</div>
+      </div>
+
+  <p class="muted">Detailed P&L, balance sheet and tax returns available under NDA. Owner will assume outstanding debts through closing where noted. To request an NDA or schedule a walkthrough, use the CTA bar below.</p>
+    </div>
+  </section>
+
+  <!-- Section: Comparative Growth (NEW) -->
+  <section id="comparative-growth">
+    <div class="inner reveal">
+      <h2>Comparative Growth (Our Company vs. Peers)</h2>
+      <div>
+        <h3 style="color:var(--color-gold)">Key Takeaways</h3>
+        <p class="muted">
+          The purple line represents the smoothed data (3-month moving average).
+          The blue dashed line is the forecast from the linear model projected 3 years ahead.
+          The average annual growth rate came out to around 72% — which already looks more realistic for a business forecast.
+        </p>
+      </div>
+      <div class="chart-wrap" style="margin-top:20px; text-align:center;">
+        <img id="growthImage" src="output (2).png"
+             alt="Comparative growth chart"
+             style="width:100%; max-height:320px; object-fit:contain; border-radius:8px;
+                    border:1px solid rgba(255,255,255,0.1);
+                    box-shadow: 0 6px 20px rgba(0,0,0,0.45);" />
+        <p style="font-size:0.95rem; text-align:center; margin-top:8px;
+                  font-style:italic; color:var(--color-gold);">
+          ▲ Average Annual Growth Rate ≈ <strong>72%</strong> — signaling strong scalability potential.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Operations & Products -->
+  <section id="operations">
+    <div class="inner reveal">
+      <h2>Operations, Product & Supply</h2>
+      <div class="grid-2">
+        <div>
+          <h3 style="color:var(--color-gold)">Business Model</h3>
+          <p class="muted">Dual channel revenue: B2B (contractors, designers, showrooms) plus B2C (direct showroom and inbound leads). Repeat and referral business is growing.</p>
+          <h3 style="color:var(--color-gold)">Product Lines</h3>
+          <ul class="bullets">
+            <li>Flush doors — minimal, modern panels</li>
+            <li>Frameless doors — hidden frames for seamless walls</li>
+            <li>Modular panel doors — European-style component system for  rapid customization</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:var(--color-gold)">Modular Frame-Panel System</h3>
+          <p class="muted">Stock stiles, rails and inserts are combinable, enabling 3–4× more model permutations from the same inventory. This reduces carrying cost and accelerates delivery for custom sizing.</p>
+          <h3 style="color:var(--color-gold)">Facilities & Equipment</h3>
+          <ul class="bullets">
+            <li>Modern LA showroom reflecting luxury positioning</li>
+            <li>In-house assembly & CNC workshop (advanced multi-purpose CNC)</li>
+            <li>Trimmers, edge-banders, precision tooling, packing & logistics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Facilities & Production Capacity (NEW) -->
+  <section id="facilities">
+    <div class="inner reveal">
+      <h2>Facilities & Production Capacity</h2>
+
+      <div class="grid-2">
+        <div>
+          <h3 style="color:var(--color-gold)">Manufacturing Floor</h3>
+          <p class="muted">
+            Our dedicated production facility spans <strong>11,380 square feet</strong>, designed
+            for efficient material flow and modern equipment placement.
+          </p>
+        </div>
+        <div>
+          <h3 style="color:var(--color-gold)">Output Capacity</h3>
+          <p class="muted">
+            With the current machinery and technical setup, monthly production capacity
+            reaches <strong>400–600 complete door sets</strong>, enabling scale while maintaining
+            consistent quality.
+          </p>
+        </div>
+      </div>
+
+      <div class="stat-cards" style="margin-top:14px;">
+        <div class="stat-card">
+          <div class="label">Facility Size</div>
+          <div class="num">11,380 sq.ft.</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Monthly Capacity</div>
+          <div class="num">400–600 sets</div>
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top:8px;">
+        <em>Scalable infrastructure supports both current demand and rapid growth projections.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- Section: Market & Growth -->
+  <section id="market">
+    <div class="inner reveal">
+      <h2>Market Opportunity</h2>
+      <div class="grid-2">
+        <div>
+          <h3 style="color:var(--color-gold)">Macro Trends</h3>
+          <ul class="bullets muted">
+            <li>U.S. interior doors market: $6.1B (2023) → $9.94B (2035), ~4.2% CAGR</li>
+            <li>North America market: $15B (2024) → $21.5B (2030), ~6.2% CAGR</li>
+            <li>Drivers: modern design demand, custom sizing, remodeling & post-disaster rebuilds</li>
+          </ul>
+          <h3 style="color:var(--color-gold)">California Tailwinds</h3>
+          <ul class="bullets muted">
+            <li>Rebuilding in wildfire-affected, high-value zones increases demand for premium products</li>
+            <li>Affluent remodels and larger door sizes (9–10 ft) are underserved by most competitors</li>
+          </ul>
+        </div>
+        <div>
+          <div class="chart-wrap">
+            <canvas id="marketChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <h3 style="color:var(--color-gold)">Competitive Advantages</h3>
+      <ul class="bullets muted">
+        <li>Modular European design + local finishing = premium product, flexible inventory</li>
+        <li>CNC Precision enables wide range of product customization.</li>
+        <li>Not contract-locked to a single manufacturer — broad model selection and negotiating power</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Section: Assets & Legal -->
+  <section id="assets">
+    <div class="inner reveal">
+      <h2>Assets Included & Legal</h2>
+      <div class="grid-2">
+        <div>
+          <h3 style="color:var(--color-gold)">Tangible Assets</h3>
+          <ul class="bullets muted">
+            <li>Inventory (materials & hardware) — estimated retail $650k+</li>
+            <li>CNC & production equipment</li>
+            <li>Showroom fixtures, displays, packaging and delivery equipment</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:var(--color-gold)">Intangible Assets</h3>
+          <ul class="bullets muted">
+            <li>Brand, logo, catalog and marketing assets</li>
+            <li>Digital assets: website, Google Ads, Merchant Center, product feeds</li>
+            <li>Customer & vendor relationships (transferable)</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="color:var(--color-gold)">Legal & Admin</h3>
+      <ul class="bullets muted">
+        <li>California S-Corp, 100% owner-held — assets and DBA transferable</li>
+        <li>Seller’s permit, local business licenses in place</li>
+        <li>No long-term liabilities or onerous contracts</li>
+        <li>General liability insurance (transferable)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Section: Contact / CTA -->
+  <section id="contact">
+    <div class="inner reveal" style="text-align:left;">
+      <h2>Next Steps</h2>
+      <p class="muted">Interested buyers: sign an NDA to receive full financials (P&L, balance sheet, tax returns) and schedule a walkthrough of the showroom & workshop. Owner transition support negotiable.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+        <button class="btn-primary" id="btn-nda">Request NDA</button>
+        <button class="btn-primary" id="btn-sched">Schedule Walkthrough</button>
+        <a href="#top" style="align-self:center;"><button class="btn-primary" style="background:rgba(255,255,255,0.08);color:#fff;">Back to Top</button></a>
+      </div>
+      <p class="muted" style="margin-top:12px;">Contact: <strong>[Your Name]</strong> • <a href="mailto:email@example.com">email@example.com</a> • [Phone]</p>
+
+      <h3 style="color:var(--color-gold);margin-top:14px;">Quick Due-Diligence Checklist</h3>
+      <ul class="bullets muted" style="margin-top:6px;">
+        <li>Signed NDA — receive full P&L, balance sheet and tax returns</li>
+        <li>Site visit: showroom & workshop walkthrough</li>
+        <li>Inventory list & equipment inspection</li>
+        <li>Transition plan & staffing overview</li>
+        <li>Closing timeline & proposed terms</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Interior Door Company — Investor Pitch</p>
+  </footer>
+  </main>
+
+  <script>
+    // -- small helpers and data
+    const revenue = [800000, 2500000, 4800000];
+    const profit = [265000, 900000, 1680000];
+    const labels = ['2022','2023','2024'];
+
+    function currency(n){
+      if (n >= 1000000) return '$' + (n/1000000).toFixed(2) + 'M';
+      if (n >= 1000) return '$' + (n/1000).toFixed(0) + 'k';
+      return '$' + n;
+    }
+
+    // Revenue chart (line with gradient)
+    const revCtx = document.getElementById('revChart').getContext('2d');
+    const revGradient = revCtx.createLinearGradient(0,0,0,300);
+    revGradient.addColorStop(0, 'rgba(212,160,23,0.28)');
+    revGradient.addColorStop(1, 'rgba(212,160,23,0.02)');
+
+    new Chart(revCtx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Revenue',
+          data: revenue,
+          borderColor: '#d4a017',
+          backgroundColor: revGradient,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: '#d4a017',
+          pointRadius: 6,
+          fill: true,
+          tension: 0.36
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, ticks: { callback: v => currency(v) } }
+        },
+        interaction: { intersect: false, mode: 'index' },
+        responsive: true, maintainAspectRatio:false
+      }
+    });
+
+    // Profit chart (bar)
+    const profitCtx = document.getElementById('profitChart').getContext('2d');
+    new Chart(profitCtx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{ label: 'Net Profit', data: profit, backgroundColor: ['#243b55','#243b55','#1b1f3b'] }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, ticks: { callback: v => currency(v) } } },
+        responsive: true, maintainAspectRatio:false
+      }
+    });
+
+    // Market chart
+    const marketCtx = document.getElementById('marketChart')?.getContext('2d');
+    if (marketCtx){
+      new Chart(marketCtx, {
+        type: 'bar',
+        data: { labels: ['2023','2035'], datasets: [{ label: 'Market (USD $B)', data: [6.1,9.94], backgroundColor: ['#243b55','#2b4a6e'] }] },
+        options: { plugins:{ legend:{display:false} }, scales:{ y:{ beginAtZero:true, ticks:{ callback: v => '$' + v + 'B' } } }, responsive:true, maintainAspectRatio:false }
+      });
+    }
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(ent => { if (ent.isIntersecting){ ent.target.classList.add('show'); observer.unobserve(ent.target); } });
+    }, { threshold: 0.18 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Nav dots active highlight (center of viewport)
+    const sections = Array.from(document.querySelectorAll('main section'));
+    const navDots = Array.from(document.querySelectorAll('.nav-dots a'));
+    function updateNav(){
+      const center = window.innerHeight/2;
+      let current = 0;
+      sections.forEach((sec,i)=>{
+        const r = sec.getBoundingClientRect();
+        if (r.top <= center && r.bottom >= center) current = i;
+      });
+      navDots.forEach((a,i)=> a.classList.toggle('active', i === current));
+    }
+    window.addEventListener('scroll', updateNav); window.addEventListener('resize', updateNav); updateNav();
+    // CTA handlers
+    document.getElementById('btn-nda')?.addEventListener('click', () => {
+      const subject = encodeURIComponent('NDA Request - Interior Door Company');
+      const body = encodeURIComponent('Hello,\n\nI am interested in receiving the NDA and financials for the Interior Door Company. Please send the NDA and next steps.\n\nRegards,\n[Name]');
+      window.location.href = `mailto:email@example.com?subject=${subject}&body=${body}`;
+    });
+    document.getElementById('btn-sched')?.addEventListener('click', () => {
+      const subject = encodeURIComponent('Site Visit Request - Interior Door Company');
+      const body = encodeURIComponent('Hello,\n\nI would like to schedule a showroom and workshop walkthrough. Please provide available dates/times.\n\nRegards,\n[Name]');
+      window.location.href = `mailto:email@example.com?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>

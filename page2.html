@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Interior Doors — Business Pitch</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root{
+    --bg:#f4f1eb;         /* light beige */
+    --panel:#ffffff;      /* white card */
+    --ink:#1b1f3b;        /* deep navy */
+    --text:#2b3441;       /* body text */
+    --gold:#d4a017;       /* soft gold */
+    --border:#efeae1;
+    --rule:#ece9e2;
+    --shadow:0 10px 30px rgba(0,0,0,.08);
+    --radius:22px;
+    --side-w:300px;
+  }
+  *{box-sizing:border-box;scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);
+    font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text);line-height:1.65;
+  }
+
+  /* ============ FIXED SIDEBAR (keeps first design vibe) ============ */
+  .sidebar{
+    position:fixed; left:0; top:0; bottom:0; width:var(--side-w);
+    background:var(--ink); color:#fff; padding:36px 26px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    overflow:hidden; z-index:10; box-shadow:0 8px 24px rgba(0,0,0,.18);
+  }
+  .sidebar h1{
+    margin:0 0 8px; line-height:1.05; letter-spacing:.4px;
+    font-weight:800; font-size:32px; position:relative; z-index:2;
+  }
+  .sidebar .sub{opacity:.9; font-size:14px; position:relative; z-index:2}
+  .nav{margin-top:18px; display:grid; gap:10px; position:relative; z-index:2}
+  .nav a{
+    color:#fff; text-decoration:none; font-weight:600; font-size:14px;
+    opacity:.85; padding:6px 8px; border-radius:10px; transition:.25s;
+  }
+  .nav a:hover{opacity:1; background:rgba(255,255,255,.08)}
+  .icon-cloud{position:absolute; inset:0; opacity:.22; z-index:1; pointer-events:none}
+  .icon-float{
+    position:absolute; width:72px; height:72px; display:grid; place-items:center;
+    border-radius:50%; border:2px solid #ffffff30; background:#ffffff12;
+    animation: float 10s ease-in-out infinite; backdrop-filter: blur(2px)
+  }
+  .icon-float svg{width:36px;height:36px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .if1{top:10%; left:14%; animation-delay:0s}
+  .if2{top:42%; left:62%; animation-delay:1.6s}
+  .if3{top:72%; left:26%; animation-delay:3.2s}
+  .if4{top:26%; left:78%; animation-delay:4.8s}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-18px) rotate(6deg)}}
+
+  /* ============ MAIN SLIDE PANEL (rounded, centered) ============ */
+  .page{
+    margin-left:var(--side-w);
+    padding:28px 20px 40px;
+  }
+  .slide{
+    max-width:1152px; margin:0 auto 28px auto;
+    background:var(--panel); border-radius:var(--radius); box-shadow:var(--shadow);
+    overflow:hidden; border:1px solid var(--border);
+  }
+  .wrap{
+    display:grid; grid-template-columns:300px 1fr; min-height:720px;
+  }
+  /* Left inside the card (title band) */
+  .side{
+    background:var(--ink); color:#fff; padding:36px 26px; position:relative;
+  }
+  .side h2{
+    margin:0 0 6px; line-height:1.05; letter-spacing:.5px; font-weight:800; font-size:34px;
+  }
+  .side .strap{opacity:.9; font-size:13px}
+  .icon-stack{position:absolute; left:26px; bottom:26px; display:grid; gap:22px}
+  .badge{
+    width:72px; height:72px; border-radius:50%; background:var(--gold);
+    display:grid; place-items:center; box-shadow:0 6px 16px rgba(0,0,0,.15);
+    animation: float 7s ease-in-out infinite;
+  }
+  .badge svg{width:36px;height:36px;fill:none;stroke:#1b1f3b;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+  /* Right inside the card (content) */
+  .main{padding:44px 40px 44px; background:var(--panel)}
+  .section{margin:0 0 24px; padding:0 0 20px; border-bottom:1px solid var(--rule)}
+  .section:last-of-type{border-bottom:0}
+  h3{margin:0 0 12px; color:var(--ink); font-size:26px; line-height:1.15; font-weight:800}
+  h4{margin:12px 0 10px; color:var(--ink); font-weight:800; font-size:20px}
+  p{margin:0 0 12px; font-size:16px; line-height:1.7}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+  .tile{
+    background:#fff; border-radius:16px; box-shadow:var(--shadow); padding:18px; border:1px solid var(--border)
+  }
+  .tile p{margin:0 0 10px}
+  .bullets{margin:6px 0 0 0; padding-left:18px}
+  .bullets li{margin:6px 0; font-size:15px; line-height:1.6}
+  .kpis{display:flex; gap:14px; flex-wrap:wrap; margin-top:10px}
+  .kpi{display:flex; align-items:baseline; gap:10px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:10px 14px; box-shadow:var(--shadow)}
+  .kpi .num{color:var(--gold); font-weight:800; font-size:28px}
+  .kpi .lbl{font-size:15px}
+
+  /* Charts */
+  .chart-wrap{padding:22px; background:#fff; border-radius:16px; box-shadow:var(--shadow); border:1px solid var(--border)}
+  canvas{max-width:100%}
+
+  /* Reveal animations */
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease}
+  .reveal.show{opacity:1; transform:translateY(0)}
+
+  /* Responsive (keep the rounded look but stack) */
+  @media (max-width:1080px){
+    .wrap{grid-template-columns:1fr}
+    .icon-stack{position:relative; left:auto; bottom:auto; margin-top:18px; grid-auto-flow:column}
+  }
+  @media (max-width:780px){
+    .grid{grid-template-columns:1fr}
+    .main{padding:28px 22px 36px}
+  }
+</style>
+</head>
+<body>
+
+<!-- FIXED BLUE SIDEBAR (unchanged design, with floating icons) -->
+<aside class="sidebar" aria-label="Sticky Sidebar">
+  <div>
+    <h1>INTERIOR<br>DOORS</h1>
+    <div class="sub">Southern California • Premium European-style</div>
+    <nav class="nav" aria-label="Sections">
+      <a href="#overview">Overview</a>
+      <a href="#sale">Reason for Sale</a>
+      <a href="#financials">Financials</a>
+      <a href="#ops">Operations</a>
+      <a href="#legal">Legal</a>
+      <a href="#market">Market</a>
+      <a href="#assets">Assets</a>
+      <a href="#tech">New Tech</a>
+    </nav>
+  </div>
+
+  <div class="icon-cloud" aria-hidden="true">
+    <div class="icon-float if1"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M7 12h10M7 16h10"/></svg></div>
+    <div class="icon-float if2"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15l.6 1.8-1.8.6M4 8l1.8.6.6-1.8"/></svg></div>
+    <div class="icon-float if3"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 16v-4h12v4M8 12V8h8v4"/></svg></div>
+    <div class="icon-float if4"><svg viewBox="0 0 24 24"><path d="M5 19l-1 4 4-1 11-11a4 4 0 10-6-6L5 19z"/></svg></div>
+  </div>
+</aside>
+
+<!-- PAGE CONTENT (keeps the rounded slide panel look) -->
+<div class="page">
+
+  <!-- SLIDE 1: Company Overview -->
+  <section class="slide" id="overview" aria-label="Company Overview">
+    <div class="wrap">
+      <!-- Left band -->
+      <aside class="side">
+        <h2>COMPANY<br>OVERVIEW</h2>
+        <div class="strap">Executive Summary • Mission & Vision • Position • Traction</div>
+        <div class="icon-stack" aria-hidden="true">
+          <div class="badge">
+            <svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"></path><path d="M14 3v5h5"></path></svg>
+          </div>
+          <div class="badge">
+            <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"></rect><rect x="10" y="10" width="4" height="4" rx="1"></rect><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+          </div>
+          <div class="badge">
+            <svg viewBox="0 0 24 24"><path d="M5 19l-1 4 4-1 11-11a4 4 0 10-6-6L5 19z"></path></svg>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="main">
+        <div class="section reveal">
+          <h3>Executive Summary</h3>
+          <p>Founded to address the growing demand for modern, European-style interior doors in the U.S. market, our company is a Southern California-based manufacturer and distributor of premium interior doors. With a strong emphasis on quality, customization, and operational efficiency, we’ve built a reputation for delivering flush, frameless, and modular luxury door systems that appeal to both contractors and end consumers.</p>
+          <p>The company is now being offered for sale as the owner seeks a strategic partner or acquirer to accelerate growth. This presents a rare opportunity to acquire a turnkey operation with a scalable business model and strong early momentum in a booming sector.</p>
+        </div>
+
+        <div class="grid">
+          <div class="tile reveal">
+            <h4>Mission & Vision</h4>
+            <p><strong>Mission:</strong> To redefine interior architecture by delivering premium, customizable, and design-forward door solutions that enhance modern living spaces.</p>
+            <p><strong>Vision:</strong> To become the leading luxury interior door brand in North America, known for custom fitment, European aesthetics, and fast delivery.</p>
+          </div>
+          <div class="tile reveal">
+            <h4>Industry Position</h4>
+            <p>We serve the mid-to-high-end residential and light commercial construction market, offering products that fill a clear gap between commodity-grade doors and ultra-premium imports. Competitors include traditional door suppliers (e.g., Home Depot, Lowe’s) and boutique European importers — yet few combine custom sizing, local assembly, component-based flexibility, and premium finishes as we do.</p>
+          </div>
+        </div>
+
+        <div class="tile reveal">
+          <h4>Early Traction & Achievements</h4>
+          <p>Despite being a young company, we’ve demonstrated strong product-market fit and growth potential. Within the first 4 months of operation, we achieved:</p>
+          <ul class="bullets">
+            <li>~$150,000 in gross sales with minimal advertising</li>
+            <li>Partnerships with 5+ showrooms covering Ventura, Los Angeles, and Orange County</li>
+            <li>Active expansion discussions with major showrooms in San Francisco and San Diego</li>
+            <li>Consistently positive feedback from professionals praising the quality of finishes and structural integrity</li>
+          </ul>
+          <div class="kpis" aria-hidden="true">
+            <div class="kpi"><div class="num">$150k</div><div class="lbl">in 4 months</div></div>
+            <div class="kpi"><div class="num">5+</div><div class="lbl">showroom partners</div></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: Reason for Sale + Financial Docs -->
+  <section class="slide" id="sale" aria-label="Reason for Sale">
+    <div class="wrap">
+      <aside class="side">
+        <h2>SALE &<br>FINANCIALS</h2>
+        <div class="strap">Reason for Sale • Documentation • Clean Transfer</div>
+        <div class="icon-stack" aria-hidden="true">
+          <div class="badge">
+            <svg viewBox="0 0 24 24"><path d="M6 12l4 4 7-7"></path><path d="M3 12l3-3m12 0l3 3"></path></svg>
+          </div>
+          <div class="badge">
+            <svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"></path><path d="M14 3v5h5"></path><path d="M9 13h6M9 17h6M9 9h2"></path></svg>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="tile reveal">
+          <h3>Reason for Sale</h3>
+          <p>This business was launched with a strong operational foundation and lean startup capital. As demand and opportunities have grown, it has become clear that additional investment is required to realize the company’s full potential—especially in areas like marketing, regional expansion, and brand awareness.</p>
+          <p>Rather than dilute focus or seek outside funding, the owner has made the strategic decision to seek a buyer with the resources and commitment to scale the brand. This is not a distressed sale; the foundation is built, and the market is ready.</p>
+        </div>
+
+        <div class="section reveal">
+          <h3>2. Financial Documentation</h3>
+          <p><em>(Detailed reports available upon NDA)</em></p>
+          <ul class="bullets">
+            <li>Profit &amp; Loss Statements</li>
+            <li>Balance Sheet</li>
+            <li>Tax Returns – Filed and available for buyer due diligence</li>
+            <li>Outstanding Debts – Owners assume the coverage of all outstanding debts.</li>
+          </ul>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: Operational Details -->
+  <section class="slide" id="ops" aria-label="Operational Details">
+    <div class="wrap">
+      <aside class="side">
+        <h2>OPERATIONS</h2>
+        <div class="strap">Model • Product Range • Modular System • Customers • Supply Chain • Team • Equipment</div>
+        <div class="icon-stack" aria-hidden="true">
+          <div class="badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.6 1.6 0 0 0 .33 1.8"/></svg></div>
+          <div class="badge"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 16v-4h12v4M8 12V8h8v4"/></svg></div>
+          <div class="badge"><svg viewBox="0 0 24 24"><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg></div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="grid">
+          <div class="tile reveal">
+            <h3>Business Model</h3>
+            <p>The company generates revenue through the sale of interior door sets, both pre-configured and fully customized, through two primary sales channels:</p>
+            <ul class="bullets">
+              <li>· B2B: Contractors, designers, developers, and showroom partners</li>
+              <li>· B2C: Homeowners via showroom visits and direct inquiries</li>
+            </ul>
+          </div>
+          <div class="tile reveal">
+            <h3>Product Range</h3>
+            <ul class="bullets">
+              <li>· Flush doors with clean, modern lines for contemporary spaces</li>
+              <li>· Frameless doors that offer a sleek, minimal aesthetic with hidden frames</li>
+              <li>· Modular panel doors (European construction) that enable scalable customization and inventory efficiency</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tile reveal">
+          <h3>Modular Frame-Panel System</h3>
+          <p>A major innovation lies in our modular frame-panel system, which allows stock components (vertical stiles, horizontal rails, and inserts) to be mixed and matched across models. This enables us to:</p>
+          <ul class="bullets">
+            <li>· Build multiple door styles from shared core inventory</li>
+            <li>· Offer rapid customization of size, finish, and inserts (glass, wood, etc.)</li>
+            <li>· Produce 3–4x more model variations from the same materials vs. traditional pre-assembled door inventory</li>
+          </ul>
+          <p>This flexibility reduces lead times, expands design options, and helps us meet the aesthetic and budgetary needs of a wide range of customers — from value-conscious homeowners to luxury custom builders.</p>
+        </div>
+
+        <div class="grid">
+          <div class="tile reveal">
+            <h3>Customer Base</h3>
+            <p>We serve a growing network of contractors, architects, and designers, as well as direct homeowners. Most projects involve custom homes, remodels, and multi-unit residential developments, with a growing share of repeat and referral business.</p>
+          </div>
+          <div class="tile reveal">
+            <h3>Supply Chain</h3>
+            <p>We import proprietary modular components from vetted suppliers in Europe and China, then size and assemble each door in California. This hybrid model offers:</p>
+            <ul class="bullets">
+              <li>- Maximum design flexibility</li>
+              <li>- Inventory cost control</li>
+              <li>- Faster fulfillment times</li>
+              <li>- Customization without full retooling</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="tile reveal">
+            <h3>Employees</h3>
+            <ul class="bullets">
+              <li>- Small, lean team including sales, assembly, and logistics</li>
+              <li>- Owner-led operations</li>
+              <li>- Easily scalable with increased demand</li>
+            </ul>
+          </div>
+          <div class="tile reveal">
+            <h3>Facilities & Equipment</h3>
+            <ul class="bullets">
+              <li>- Modern showroom in Los Angeles designed to reflect the brand’s luxury identity</li>
+              <li>- In-house assembly workshop for precise sizing, machining, and packaging</li>
+            </ul>
+            <p><strong>Core equipment includes:</strong></p>
+            <ul class="bullets">
+              <li>- Advanced CNC machine, calibrated for:</li>
+              <li>&nbsp;&nbsp;&nbsp; • Multiple door types: Swing, Pocket, Bypass, Magic sliding, Double doors</li>
+              <li>&nbsp;&nbsp;&nbsp; • Precision pre-cuts: European handles, American locksets, Radius and Concealed hinges</li>
+            </ul>
+            <p><strong>This setup allows:</strong></p>
+            <ul class="bullets">
+              <li>- Custom configurations across budget tiers</li>
+              <li>- Faster order fulfillment</li>
+              <li>- Internal quality control</li>
+              <li>- Enhanced production speed vs. off-site subcontracting</li>
+            </ul>
+            <p><strong>Other equipment:</strong> Trimmers, edge-banding tools, professional packing & logistics tools for regional/national delivery.</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: Legal & Administrative -->
+  <section class="slide" id="legal" aria-label="Legal & Administrative">
+    <div class="wrap">
+      <aside class="side">
+        <h2>LEGAL &<br>ADMIN</h2>
+        <div class="strap">Ownership • Licenses • Contracts • IP • Insurance</div>
+        <div class="icon-stack" aria-hidden="true">
+          <div class="badge"><svg viewBox="0 0 24 24"><path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4z"/></svg></div>
+          <div class="badge"><svg viewBox="0 0 24 24"><path d="M8 17l4 4 4-4M12 12V3"/></svg></div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="grid">
+          <div class="tile reveal">
+            <h3>Ownership Structure</h3>
+            <p>Operated under a registered California S-Corporation, 100% owner-held. DBA and assets are fully transferable.</p>
+          </div>
+          <div class="tile reveal">
+            <h3>Licenses & Permits</h3>
+            <ul class="bullets">
+              <li>- California Seller’s Permit</li>
+              <li>- Local Business License</li>
+            </ul>
+          </div>
+          <div class="tile reveal">
+            <h3>Contracts & Agreements</h3>
+            <ul class="bullets">
+              <li>- No long-term liabilities or burdensome agreements</li>
+              <li>- Strong working relationships with vendors, suppliers, and designers</li>
+            </ul>
+          </div>
+          <div class="tile reveal">
+            <h3>Intellectual Property</h3>
+            <ul class="bullets">
+              <li>- Trademark filings (optional transfer)</li>
+              <li>- Logo, branding, catalog, brochures, and website content</li>
+              <li>- Google Business Profile with 5-star reviews</li>
+            </ul>
+          </div>
+          <div class="tile reveal">
+            <h3>Insurance</h3>
+            <p>General liability coverage in place and transferable.</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: Market & Growth Potential + Charts -->
+  <section class="slide" id="market" aria-label="Market & Growth">
+    <div class="wrap">
+      <aside class="side">
+        <h2>MARKET &<br>GROWTH</h2>
+        <div class="strap">Trends • CA Outlook • Charts • Advantages</div>
+        <div class="icon-stack" aria-hidden="true">
+          <div class="badge"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 16l3-3 3 3 6-6"/></svg></div>
+          <div class="badge"><svg viewBox="0 0 24 24"><path d="M15 7h6v6"/></svg></div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="tile reveal">
+          <h3>National Industry Trends</h3>
+          <ul class="bullets">
+            <li>- The U.S. interior doors market is expected to grow from $6.1B in 2023 to $9.94B by 2035, at a CAGR of ~4.17% (MarketResearchFuture)</li>
+            <li>- The North America interior doors market is valued at $15B in 2024, projected to grow at 6.16% CAGR to $21.5B by 2030 (TechSci Research)</li>
+            <li>- Key drivers include demand for modern styles, custom sizing, durable finishes, and home improvement projects</li>
+          </ul>
+        </div>
+
+        <div class="tile reveal">
+          <h3>California Construction Outlook</h3>
+          <ul class="bullets">
+            <li>- Rebuilding after wildfires in high-value areas of LA County, Malibu, and Ventura is ramping up, with an estimated 25% increase in residential permits expected in the coming year (ConstructConnect, Gov.ca.gov)</li>
+            <li>- Much of the reconstruction is happening in affluent areas, where buyers demand design-forward, luxury-grade interior finishes</li>
+            <li>- Ongoing housing shortages and permitting reforms are accelerating both new construction and remodel projects statewide (LA Times)</li>
+          </ul>
+        </div>
+
+        <div class="grid">
+          <div class="chart-wrap reveal">
+            <h4 style="margin-top:0">U.S. Market Size</h4>
+            <canvas id="marketChart" height="240" aria-label="US Market Growth"></canvas>
+            <p style="font-size:12px;color:#6b7280;margin:8px 0 0">Projection 2023 → 2035 (illustrative based on cited CAGR ranges).</p>
+          </div>
+          <div class="chart-wrap reveal">
+            <h4 style="margin-top:0">Channel Mix (Illustrative)</h4>
+            <canvas id="mixChart" height="240" aria-label="Channel Mix"></canvas>
+            <p style="font-size:12px;color:#6b7280;margin:8px 0 0">B2B vs. B2C share mix shown for presentation purposes.</p>
+          </div>
+          <div class="chart-wrap reveal" style="grid-column:1/-1">
+            <h4 style="margin-top:0">Lead-Time Comparison</h4>
+            <canvas id="leadChart" height="240" aria-label="Lead Time"></canvas>
+            <p style="font-size:12px;color:#6b7280;margin:8px 0 0">Local in-house assembly vs. imported sea-freight (illustrative ranges).</p>
+          </div>
+        </div>
+
+        <div class="tile reveal">
+          <h3>Competitive Advantages</h3>
+          <ul class="bullets">
+            <li>- European modular technology enables scalable customization</li>
+            <li>- High-quality materials & superior finish repeatedly praised by contractors</li>
+            <li>- CNC machining enables cost-tier flexibility and precision</li>
+            <li>- Custom sizing and local assembly improves turnaround time</li>
+            <li>- Inventory efficiency: modular stock = 3–4x more model flexibility</li>
+            <li>- Strong early B2B partnerships and showroom presence</li>
+            <li>- Fully optimized for future e-commerce, franchising, or regional expansion</li>
+          </ul>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: Assets & Resources -->
+  <section class="slide" id="assets" aria-label="Assets & Resources">
+    <div class="wrap">
+      <aside class="side">
+        <h2>ASSETS &<br>RESOURCES</h2>
+        <div class="strap">Tangible • Intangible • Transfer Support</div>
+        <div class="icon-stack" aria-hidden="true">
+          <div class="badge"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div>
+          <div class="badge"><svg viewBox="0 0 24 24"><path d="M8 17l4 4 4-4M12 12V3"/></svg></div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="grid">
+          <div class="tile reveal">
+            <h3>Tangible Assets</h3>
+            <ul class="bullets">
+              <li>- Inventory (stock materials, doors, hardware.) Estimated retail value of $650k+</li>
+              <li>- CNC machine and full production tools</li>
+              <li>- Showroom displays and furniture</li>
+              <li>- Packaging and logistics equipment</li>
+            </ul>
+          </div>
+          <div class="tile reveal">
+            <h3>Intangible Assets</h3>
+            <ul class="bullets">
+              <li>- Brand identity, logo, and graphic assets</li>
+              <li>- Google Ads, Merchant Center, and product feed setups</li>
+              <li>- Business email, domain, and internal systems</li>
+              <li>- Relationships with designers, vendors, and showroom partners. Full customer base will be transferred.</li>
+              <li>- Owner transition support (duration negotiable)</li>
+            </ul>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: New Technologies -->
+  <section class="slide" id="tech" aria-label="New Technologies">
+    <div class="wrap">
+      <aside class="side">
+        <h2>NEW<br>TECHNOLOGIES</h2>
+        <div class="strap">Engineering • Automation • Rapid Customization</div>
+        <div class="icon-stack" aria-hidden="true">
+          <div class="badge"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"></rect><rect x="10" y="10" width="4" height="4" rx="1"></rect></svg></div>
+          <div class="badge"><svg viewBox="0 0 24 24"><path d="M19 7l-7 7-4-4"/></svg></div>
+          <div class="badge"><svg viewBox="0 0 24 24"><path d="M5 19l-1 4 4-1 11-11a4 4 0 10-6-6L5 19z"/></svg></div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="grid">
+          <div class="tile reveal">
+            <h3>Engineered Euro-Block Core</h3>
+            <p>Multi-layer, laminated solid-wood core faced with high-density MDF and real wood veneer for warp resistance, screw-holding strength, and long-term dimensional stability. Delivers solid feel, superior sound dampening, and stable anchoring for concealed hinges & premium hardware.</p>
+          </div>
+          <div class="tile reveal">
+            <h3>Modular Frame-Panel System</h3>
+            <p>Interchangeable stiles, rails, and inserts (glass/wood/metal) enable rapid style creation from shared inventory, producing 3–4× more model variations from the same stock, with faster lead times and lower carrying costs.</p>
+          </div>
+          <div class="tile reveal">
+            <h3>CNC Precision & CAD-to-Shop</h3>
+            <p>Programmed toolpaths for swing, pocket, bypass, and double-door sets; precise pre-cuts for European handles, American locksets, radius & concealed hinges. Enables repeatable tolerance control, faster changeovers, and cleaner fitment that reduces install time & rework.</p>
+          </div>
+          <div class="tile reveal">
+            <h3>Automated Finishing Line</h3>
+            <p>Closed spray environment with multi-stage sanding/polishing for consistent, dust-free coatings and premium sheen. Durable, chemical-resistant finishes with uniform color-matching across large orders; factory pre-finish lowers total installed cost.</p>
+          </div>
+          <div class="tile reveal">
+            <h3>Complete Door Systems</h3>
+            <p>Pre-finished slabs + matching frames/jambs, trims, seals, and premium hardware ship as a kit for rapid installation. Fewer site trades, predictable timelines, consistent results, and high customer satisfaction & referrals.</p>
+          </div>
+          <div class="tile reveal">
+            <h3>Performance & Scale</h3>
+            <p>Solid-core mass + integrated seals improve acoustic comfort; tall formats (8–9 ft) and non-standard widths available on short lead times. Local assembly shortens schedules with in-house quality control, scaling across SKUs without quality loss.</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+</div>
+
+<!-- ====== SCRIPTS ====== -->
+<script>
+  /* Reveal on scroll */
+  const reveals=[...document.querySelectorAll('.reveal')];
+  const revObs=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); revObs.unobserve(e.target);} });
+  },{threshold:.2});
+  reveals.forEach(el=>revObs.observe(el));
+
+  /* Charts (interactive) */
+  const INK='#1b1f3b', GOLD='#d4a017';
+
+  const marketEl=document.getElementById('marketChart');
+  if(marketEl){
+    new Chart(marketEl,{
+      type:'bar',
+      data:{labels:['2023','$6.1B','2035','$9.94B'],
+        datasets:[{data:[6.1,9.94], backgroundColor:[INK,GOLD], borderRadius:8}]
+      },
+      options:{
+        responsive:true, plugins:{legend:{display:false}},
+        scales:{y:{beginAtZero:true, ticks:{callback:v=>'$'+v+'B'}}}
+      }
+    });
+  }
+
+  const mixEl=document.getElementById('mixChart');
+  if(mixEl){
+    new Chart(mixEl,{
+      type:'doughnut',
+      data:{labels:['B2B','B2C'], datasets:[{data:[65,35], backgroundColor:[INK,GOLD]}]},
+      options:{plugins:{legend:{position:'bottom'}}}
+    });
+  }
+
+  const leadEl=document.getElementById('leadChart');
+  if(leadEl){
+    new Chart(leadEl,{
+      type:'bar',
+      data:{labels:['Local Assembly','Imported'],
+        datasets:[{data:[2.5,10], backgroundColor:[INK,GOLD], borderRadius:8}]
+      },
+      options:{
+        plugins:{legend:{display:false}},
+        scales:{y:{beginAtZero:true, ticks:{callback:v=>v+' wks'}}}
+      }
+    });
+  }
+</script>
+</body>
+</html>
